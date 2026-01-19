@@ -22,6 +22,7 @@ void BFS (string start, string goal){
     queue<pair<string, int>> q;
     map<string, bool> visited;
     map<string, string> parent;
+    vector<pair<string, string>> bfsTree;
 
     q.push({start, 0});
     visited[start] = true;
@@ -33,7 +34,17 @@ void BFS (string start, string goal){
         int cost = p.second;
         q.pop();
 
-        //terminating condition
+
+        for (auto &neighbor : graph[city]) {
+            if (!visited[neighbor.first]) {
+                visited[neighbor.first] = true;
+                parent[neighbor.first] = city;
+                bfsTree.push_back({city, neighbor.first});
+                q.push({neighbor.first, cost + neighbor.second});
+            }
+        }
+
+         //terminating condition
         if(city==goal){
             vector<string> path;
             string cur = goal;
@@ -54,17 +65,13 @@ void BFS (string start, string goal){
             cout << "END";
 
             cout << "\nTotal Step Cost: " << totalCost << " miles\n";
-
             
-            return;
-        }
-
-        for (auto &neighbor : graph[city]) {
-            if (!visited[neighbor.first]) {
-                visited[neighbor.first] = true;
-                parent[neighbor.first] = city;
-                q.push({neighbor.first, cost + neighbor.second});
+            cout << "\nBFS Tree Edges:\n";
+            for(const auto& edge : bfsTree) {
+                cout << edge.first << " -> " << edge.second << endl;
             }
+
+            return;
         }
     }
 }

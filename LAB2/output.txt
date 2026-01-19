@@ -1,0 +1,7 @@
+Starting BFS search...
+Goal Reached!
+Total states explored: 171712
+
+Starting DFS search...
+Goal Reached!
+Total states explored: 136681
